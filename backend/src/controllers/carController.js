@@ -15,7 +15,7 @@ export const getCarById = async (req, res) => {
     if (car) {
       res.json(car);
     } else {
-      res.status(404).json({ message: "Car not found" });
+      res.status(404).json({ message: "Mari-Car not found" });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -38,7 +38,7 @@ export const updateCar = async (req, res) => {
     if (car) {
       res.json(car);
     } else {
-      res.status(404).json({ message: "Car not found" });
+      res.status(404).json({ message: "Mari-Car not found" });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -51,7 +51,7 @@ export const deleteCar = async (req, res) => {
     if (car) {
       res.json({ message: "Car removed" });
     } else {
-      res.status(404).json({ message: "Car not found" });
+      res.status(404).json({ message: "Mari-Car not found" });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });

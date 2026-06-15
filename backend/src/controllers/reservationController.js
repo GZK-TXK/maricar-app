@@ -7,10 +7,10 @@ export const createReservation = async (req, res) => {
 
     const car = await Car.findById(carId);
     if (!car) {
-      return res.status(404).json({ message: "Car not found" });
+      return res.status(404).json({ message: "Mari-Car not found" });
     }
     if (!car.available) {
-      return res.status(400).json({ message: "Car not available" });
+      return res.status(400).json({ message: "Mari-Car not available" });
     }
 
     const days = Math.ceil((new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24));
