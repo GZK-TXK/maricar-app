@@ -25,6 +25,15 @@ export const getCarById = async (req, res) => {
 export const createCar = async (req, res) => {
   try {
     const { brand, model, category, pricePerDay } = req.body;
+
+    if (!brand || !model || !category || !pricePerDay) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    if (pricePerDay <= 0) {
+      return res.status(400).json({ message: "Price must be greater than 0" });
+    }
+
     const imageUrl = req.file ? "/uploads/" + req.file.filename : "" ;
     const car = await Car.create({ brand, model, category, pricePerDay, imageUrl });
     res.status(201).json(car);
@@ -35,9 +44,18 @@ export const createCar = async (req, res) => {
 
 export const updateCar = async (req, res) => {
   try {
+    if (Object.keys(req.body).length === 0 && !req.file) {
+      return res.status(400).json({ message: "No fields to update" });
+    }
+
+    if (req.body.pricePerDay !== undefined && req.body.pricePerDay <= 0) {
+      return res.status(400).json({ message: "Price must be greater than 0" });
+    }
+
     if (req.file) {
       req.body.imageUrl = "/uploads/" + req.file.filename;
     }
+
     const car = await Car.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (car) {
       res.json(car);
