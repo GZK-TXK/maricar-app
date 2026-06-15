@@ -24,7 +24,8 @@ export const getCarById = async (req, res) => {
 
 export const createCar = async (req, res) => {
   try {
-    const { brand, model, category, pricePerDay, imageUrl } = req.body;
+    const { brand, model, category, pricePerDay } = req.body;
+    const imageUrl = req.file ? "/uploads/" + req.file.filename : "" ;
     const car = await Car.create({ brand, model, category, pricePerDay, imageUrl });
     res.status(201).json(car);
   } catch (error) {
@@ -34,6 +35,9 @@ export const createCar = async (req, res) => {
 
 export const updateCar = async (req, res) => {
   try {
+    if (req.file) {
+      req.body.imageUrl = "/uploads/" + req.file.filename;
+    }
     const car = await Car.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (car) {
       res.json(car);
@@ -49,7 +53,7 @@ export const deleteCar = async (req, res) => {
   try {
     const car = await Car.findByIdAndDelete(req.params.id);
     if (car) {
-      res.json({ message: "Car removed" });
+      res.json({ message: "Mari-Car removed" });
     } else {
       res.status(404).json({ message: "Mari-Car not found" });
     }
